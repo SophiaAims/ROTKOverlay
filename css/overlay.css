@@ -22,14 +22,14 @@ body {
   padding: 24px;
 }
 
-/* settings page preview only: sit in the middle of the fake stream */
+/* settings page preview only: halfway down the left side of the fake stream */
 .preview body {
   box-sizing: border-box;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .stats {
