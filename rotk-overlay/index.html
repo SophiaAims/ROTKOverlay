@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ROTK stats overlay maker</title>
+  <meta name="description" content="Make a cute H1Z1 ROTK stats overlay for OBS.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/config.css">
+</head>
+<body>
+  <header class="top">
+    <h1>ROTK stats overlay maker</h1>
+    <p>Pick your stats and style, then drop the link into OBS as a browser source.</p>
+  </header>
+
+  <main class="layout">
+    <section class="controls">
+      <div class="group link-box">
+        <label for="rotk-link" class="big-label">Your ROTK overlay link</label>
+        <input id="rotk-link" type="text" placeholder="https://rotk.app/overlay/..." spellcheck="false" autocomplete="off">
+        <p id="link-status" class="hint" aria-live="polite"></p>
+        <p class="hint">Find it on rotk.app under your overlay settings. You can also paste an overlay link made here to edit it.</p>
+      </div>
+
+      <form id="settings" onsubmit="return false"></form>
+
+      <button type="button" id="reset" class="quiet">Reset style to default</button>
+    </section>
+
+    <aside class="side">
+      <div class="stage" id="stage" data-bg="game">
+        <iframe id="preview" title="Overlay preview"></iframe>
+        <div class="cam" aria-hidden="true">your webcam</div>
+      </div>
+
+      <div class="stage-tools">
+        <fieldset class="bg-picker">
+          <legend>Preview background</legend>
+          <label><input type="radio" name="stage-bg" value="game" checked> Game</label>
+          <label><input type="radio" name="stage-bg" value="dark"> Dark</label>
+          <label><input type="radio" name="stage-bg" value="light"> Light</label>
+        </fieldset>
+        <button type="button" id="test" class="quiet">Test animation</button>
+      </div>
+
+      <div class="group out">
+        <label for="output" class="big-label">Your OBS link</label>
+        <div class="copy-row">
+          <input id="output" type="text" readonly>
+          <button type="button" id="copy" class="primary">Copy link</button>
+        </div>
+        <p class="hint">In OBS, add a Browser Source and paste this as the URL. 800 × 400 is a good starting size.
+          This link has your ROTK key in it, so keep it off stream.</p>
+      </div>
+    </aside>
+  </main>
+
+  <datalist id="font-list">
+    <option value="Baloo 2">
+    <option value="Fredoka">
+    <option value="Chewy">
+    <option value="Nunito">
+    <option value="Bubblegum Sans">
+    <option value="Luckiest Guy">
+    <option value="Sniglet">
+    <option value="Poppins">
+    <option value="Press Start 2P">
+  </datalist>
+
+  <script type="module" src="js/config-ui.js"></script>
+</body>
+</html>
