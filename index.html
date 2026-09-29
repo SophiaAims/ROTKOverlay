@@ -4,17 +4,31 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ROTK stats overlay maker</title>
+  <script>
+    // apply the saved theme before anything draws
+    try {
+      const t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch {}
+  </script>
   <meta name="description" content="Make a cute H1Z1 ROTK stats overlay for OBS.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/config.css">
 </head>
 <body>
   <header class="top">
-    <h1>ROTK stats overlay maker</h1>
-    <p>Pick your stats and style, then drop the link into OBS as a browser source.</p>
+    <div>
+      <h1>ROTK stats overlay maker</h1>
+      <p>Pick your stats and style, then drop the link into OBS as a browser source.</p>
+    </div>
+    <div class="theme-toggle" role="group" aria-label="Page theme">
+      <button type="button" data-theme-choice="auto">Auto</button>
+      <button type="button" data-theme-choice="light">Light</button>
+      <button type="button" data-theme-choice="dark">Dark</button>
+    </div>
   </header>
 
   <main class="layout">
@@ -71,6 +85,7 @@
     <option value="Press Start 2P">
   </datalist>
 
+  <script type="module" src="js/theme.js"></script>
   <script type="module" src="js/config-ui.js"></script>
 </body>
 </html>
