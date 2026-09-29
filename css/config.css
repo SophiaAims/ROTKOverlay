@@ -1,12 +1,50 @@
+/* Light is the base. Dark kicks in from the system setting or the toggle.
+   To change the accent everywhere, change --accent (and --accent-text) in both themes. */
 :root {
-  --blush: #fff0f7;
-  --pink: #ff7ec8;
-  --pink-deep: #e0439c;
-  --plum: #4a1747;
-  --plum-soft: #7a4a78;
-  --cyan: #7fe8ff;
-  --white: #ffffff;
-  --line: #f2c9df;
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --surface-2: #efede7;
+  --line: #dddad1;
+  --text: #16150f;
+  --muted: #676458;
+  --accent: #b8870f;
+  --accent-text: #16150f;
+  --on-accent: #16150f;
+  --good: #1a7f37;
+  --bad: #c62a2a;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0a09;
+    --surface: #141412;
+    --surface-2: #1c1c19;
+    --line: #2b2a26;
+    --text: #efede6;
+    --muted: #9c998e;
+    --accent: #e3b341;
+    --accent-text: #e3b341;
+    --on-accent: #0a0a09;
+    --good: #4cc27a;
+    --bad: #f0605d;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0a09;
+  --surface: #141412;
+  --surface-2: #1c1c19;
+  --line: #2b2a26;
+  --text: #efede6;
+  --muted: #9c998e;
+  --accent: #e3b341;
+  --accent-text: #e3b341;
+  --on-accent: #0a0a09;
+  --good: #4cc27a;
+  --bad: #f0605d;
+  color-scheme: dark;
 }
 
 * {
@@ -15,43 +53,68 @@
 
 body {
   margin: 0;
-  background: var(--blush);
-  color: var(--plum);
-  font: 500 16px/1.5 "Nunito", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font: 500 16px/1.5 "Barlow", system-ui, sans-serif;
 }
 
 h1,
 legend,
 .big-label {
-  font-family: "Baloo 2", "Nunito", sans-serif;
+  font-family: "Barlow Condensed", "Barlow", sans-serif;
 }
 
 :focus-visible {
-  outline: 3px solid var(--pink-deep);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* header */
 
 .top {
-  padding: 32px 24px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 32px 24px 8px;
 }
 
 .top h1 {
   margin: 0;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
-  line-height: 1.05;
-  color: var(--pink);
-  text-shadow: 2px 3px 0 var(--plum);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
 }
 
 .top p {
   margin: 8px 0 0;
-  color: var(--plum-soft);
+  color: var(--muted);
   max-width: 60ch;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.theme-toggle button {
+  border: 0;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.theme-toggle button[aria-pressed="true"] {
+  background: var(--surface-2);
+  color: var(--text);
 }
 
 /* two columns: settings on the left, preview sticks on the right */
@@ -94,23 +157,23 @@ legend,
 .group {
   margin: 0;
   padding: 16px 18px 18px;
-  background: var(--white);
-  border: 2px solid var(--line);
-  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
   min-width: 0;
 }
 
 .group legend {
   padding: 0 6px;
   margin-left: -6px;
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .big-label {
   display: block;
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.3rem;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
@@ -122,14 +185,14 @@ legend,
   padding: 6px 0;
 }
 
-.field > label,
-.field-title {
-  font-weight: 700;
-}
-
 .field.stacked {
   grid-template-columns: 1fr;
   gap: 8px;
+}
+
+.field > label,
+.field-title {
+  font-weight: 600;
 }
 
 .field.check {
@@ -145,52 +208,53 @@ select {
   font: inherit;
   color: inherit;
   padding: 8px 10px;
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-2);
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus,
 select:focus {
-  border-color: var(--pink);
+  border-color: var(--accent);
+  outline: none;
 }
 
 input[type="color"] {
   width: 100%;
-  height: 40px;
+  height: 38px;
   padding: 3px;
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-2);
   cursor: pointer;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
-  accent-color: var(--pink-deep);
-  width: 18px;
-  height: 18px;
+  accent-color: var(--accent);
+  width: 17px;
+  height: 17px;
   margin: 0;
 }
 
 .hint {
   margin: 8px 0 0;
   font-size: 0.9rem;
-  color: var(--plum-soft);
+  color: var(--muted);
 }
 
 #link-status[data-ok="yes"] {
-  color: #1d7a4f;
-  font-weight: 700;
+  color: var(--good);
+  font-weight: 600;
 }
 
 #link-status[data-ok="no"] {
-  color: #b3124f;
-  font-weight: 700;
+  color: var(--bad);
+  font-weight: 600;
 }
 
-/* stat checkboxes as little toggle pills */
+/* stat checkboxes as toggle chips */
 
 .pills {
   display: flex;
@@ -210,28 +274,32 @@ input[type="radio"] {
 
 .pill span {
   display: inline-block;
-  padding: 6px 12px;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  font-weight: 700;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-weight: 600;
   font-size: 0.95rem;
-  background: var(--white);
+  background: var(--surface-2);
+  color: var(--muted);
   user-select: none;
 }
 
+.pill:hover span {
+  color: var(--text);
+}
+
 .pill input:checked + span {
-  background: var(--pink);
-  border-color: var(--plum);
-  color: var(--white);
-  text-shadow: 1px 1px 0 var(--plum);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 
 .pill input:focus-visible + span {
-  outline: 3px solid var(--pink-deep);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* color theme buttons show their own colors */
+/* color theme buttons show the overlay colors they apply */
 
 .presets {
   display: flex;
@@ -240,18 +308,18 @@ input[type="radio"] {
 }
 
 .preset {
-  font: 800 1rem "Baloo 2", sans-serif;
+  font: 700 1rem "Barlow Condensed", sans-serif;
   padding: 4px 12px;
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  background: #3a3440;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #2a2926;
   color: var(--swatch);
-  text-shadow: 2px 2px 0 var(--swatch-shadow);
+  text-shadow: 1px 2px 0 var(--swatch-shadow);
   cursor: pointer;
 }
 
 .preset:hover {
-  border-color: var(--pink);
+  border-color: var(--accent);
 }
 
 /* buttons */
@@ -262,54 +330,50 @@ button {
 }
 
 .primary {
-  font-weight: 800;
+  font-weight: 700;
   padding: 8px 16px;
-  border: 2px solid var(--plum);
-  border-radius: 10px;
-  background: var(--pink);
-  color: var(--white);
-  text-shadow: 1px 1px 0 var(--plum);
-  box-shadow: 3px 3px 0 var(--plum);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
   white-space: nowrap;
 }
 
-.primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--plum);
+.primary:hover {
+  filter: brightness(1.08);
 }
 
 .primary:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
-  box-shadow: none;
+  filter: none;
 }
 
 .quiet {
-  font-weight: 700;
+  font-weight: 600;
   padding: 8px 14px;
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  background: var(--white);
-  color: var(--plum);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
 }
 
 .quiet:hover {
-  border-color: var(--pink);
+  border-color: var(--accent);
 }
 
 #reset {
   margin-top: 16px;
 }
 
-/* the preview: overlay on top of a fake game scene, sitting right above a webcam box */
+/* the preview: overlay on top of a fake game scene, sitting above a webcam box */
 
 .stage {
   position: relative;
   aspect-ratio: 16 / 10;
-  border: 3px solid var(--plum);
-  border-radius: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 5px 5px 0 var(--pink);
 }
 
 .stage[data-bg="game"] {
@@ -319,11 +383,11 @@ button {
 }
 
 .stage[data-bg="dark"] {
-  background: #1c1a22;
+  background: #111110;
 }
 
 .stage[data-bg="light"] {
-  background: #f4f4f4;
+  background: #f1f1f1;
 }
 
 /* the overlay is drawn at real size and shrunk, roughly how it'll look on a 1080p stream */
@@ -337,6 +401,7 @@ button {
   transform-origin: top left;
   border: 0;
   background: transparent;
+  color-scheme: normal;
 }
 
 .cam {
@@ -347,11 +412,11 @@ button {
   aspect-ratio: 16 / 9;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  background: rgba(30, 20, 35, 0.55);
-  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  background: rgba(20, 20, 18, 0.55);
+  border: 1px dashed rgba(255, 255, 255, 0.55);
   color: rgba(255, 255, 255, 0.85);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.9rem;
 }
 
@@ -375,7 +440,7 @@ button {
 .bg-picker legend {
   float: left;
   margin-right: 4px;
-  font: 700 0.95rem "Nunito", sans-serif;
+  font: 600 0.95rem "Barlow", sans-serif;
 }
 
 .bg-picker label {
@@ -392,10 +457,4 @@ button {
 
 .copy-row input {
   font-size: 0.9rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .primary:active {
-    transform: none;
-  }
 }
