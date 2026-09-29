@@ -366,7 +366,7 @@ button {
   margin-top: 16px;
 }
 
-/* the preview: overlay on top of a fake game scene, sitting above a webcam box */
+/* the preview: overlay on top of a game screenshot */
 
 .stage {
   position: relative;
@@ -376,8 +376,10 @@ button {
   overflow: hidden;
 }
 
+/* gameplay screenshot, with the old painted field underneath while it loads */
 .stage[data-bg="game"] {
   background:
+    url("../sample%20gamplay.jpg") center / cover no-repeat,
     radial-gradient(ellipse at 70% 110%, #7d7a3a 0 22%, transparent 45%),
     linear-gradient(180deg, #9fb7c4 0%, #c4cfc6 38%, #7f8a5a 39%, #6c7449 60%, #8a7a55 100%);
 }
@@ -396,28 +398,12 @@ button {
   top: 0;
   left: 0;
   width: calc(100% / 0.55);
-  height: calc(62% / 0.55);
+  height: calc(100% / 0.55);
   transform: scale(0.55);
   transform-origin: top left;
   border: 0;
   background: transparent;
   color-scheme: normal;
-}
-
-.cam {
-  position: absolute;
-  left: 24px;
-  bottom: 18px;
-  width: 38%;
-  aspect-ratio: 16 / 9;
-  display: grid;
-  place-items: center;
-  border-radius: 6px;
-  background: rgba(20, 20, 18, 0.55);
-  border: 1px dashed rgba(255, 255, 255, 0.55);
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 600;
-  font-size: 0.9rem;
 }
 
 .stage-tools {
@@ -458,3 +444,40 @@ button {
 .copy-row input {
   font-size: 0.9rem;
 }
+
+/* thanks + socials box under the OBS link */
+
+.shout h2 {
+  margin: 0;
+}
+
+.shout p {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* each link gets a stripe in its brand color */
+.social {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brand);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.social:hover {
+  border-color: var(--brand);
+}
+
+.discord { --brand: #5865f2; }
+.twitch { --brand: #9146ff; }
+.youtube { --brand: #ff0033; }

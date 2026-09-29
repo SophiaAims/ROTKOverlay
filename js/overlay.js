@@ -6,6 +6,7 @@ import { EFFECTS } from './effects/index.js';
 const root = document.getElementById('stats');
 const msg = document.getElementById('msg');
 const isPreview = new URLSearchParams(location.search).has('preview');
+if (isPreview) document.documentElement.classList.add('preview');
 
 let settings = fromParams(location.search);
 let data = null;

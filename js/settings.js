@@ -63,6 +63,7 @@ const base = [
     type: 'multi',
     label: 'Effects',
     group: 'Animation',
+    look: 'checks', // plain checkboxes instead of chips
     options: EFFECTS.map((e) => [e.id, e.label]),
     default: EFFECTS.filter((e) => e.on).map((e) => e.id),
   },

@@ -1,6 +1,7 @@
 import { SCHEMA, defaults, toParams, fromParams } from './settings.js';
 import { PRESETS } from './presets.js';
 import { parseRotkLink } from './api.js';
+import { FONTS } from './fonts.js';
 
 const form = document.getElementById('settings');
 const preview = document.getElementById('preview');
@@ -45,6 +46,13 @@ function makeField(f) {
       return input;
     });
     syncers[f.id] = () => boxes.forEach((b) => (b.checked = state[f.id].includes(b.value)));
+    if (f.look === 'checks') {
+      return h(
+        'div',
+        {},
+        ...boxes.map((b, i) => h('label', { className: 'field check' }, b, h('span', {}, f.options[i][1])))
+      );
+    }
     return h(
       'div',
       { className: 'pills' },
@@ -193,6 +201,11 @@ document.querySelectorAll('[name="stage-bg"]').forEach((radio) => {
     document.getElementById('stage').dataset.bg = radio.value;
   });
 });
+
+// the style shows next to each name in the dropdown
+document.getElementById('font-list').append(
+  ...Object.entries(FONTS).flatMap(([style, names]) => names.map((n) => h('option', { value: n, label: style })))
+);
 
 buildForm();
 linkInput.value = rotkLinkFromState();

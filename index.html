@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ROTK stats overlay maker</title>
+  <title>ROTK Overlay Creator</title>
   <script>
     // apply the saved theme before anything draws
     try {
@@ -11,7 +11,7 @@
       if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
     } catch {}
   </script>
-  <meta name="description" content="Make a cute H1Z1 ROTK stats overlay for OBS.">
+  <meta name="description" content="Fully customizable ROTK overlay creator for OBS.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,8 +21,8 @@
 <body>
   <header class="top">
     <div>
-      <h1>ROTK stats overlay maker</h1>
-      <p>Pick your stats and style, then drop the link into OBS as a browser source.</p>
+      <h1>ROTK Overlay Creator</h1>
+      <p>created by @SophiaAims on twitch.</p>
     </div>
     <div class="theme-toggle" role="group" aria-label="Page theme">
       <button type="button" data-theme-choice="auto">Auto</button>
@@ -48,7 +48,6 @@
     <aside class="side">
       <div class="stage" id="stage" data-bg="game">
         <iframe id="preview" title="Overlay preview"></iframe>
-        <div class="cam" aria-hidden="true">your webcam</div>
       </div>
 
       <div class="stage-tools">
@@ -70,20 +69,22 @@
         <p class="hint">In OBS, add a Browser Source and paste this as the URL. 800 × 400 is a good starting size.
           This link has your ROTK key in it, so keep it off stream.</p>
       </div>
+
+      <div class="group shout">
+        <h2 class="big-label">Thanks for checking this out!</h2>
+        <p>Got an idea or a suggestion for the overlay? Come tell me on Discord.
+          If you want to support, swing by my stream.</p>
+        <div class="socials">
+          <a class="social discord" href="https://discord.gg/YOUR-INVITE" target="_blank" rel="noopener">Discord</a>
+          <a class="social twitch" href="https://twitch.tv/SophiaAims" target="_blank" rel="noopener">Twitch</a>
+          <a class="social youtube" href="https://youtube.com/@SophiaAims" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
     </aside>
   </main>
 
-  <datalist id="font-list">
-    <option value="Baloo 2">
-    <option value="Fredoka">
-    <option value="Chewy">
-    <option value="Nunito">
-    <option value="Bubblegum Sans">
-    <option value="Luckiest Guy">
-    <option value="Sniglet">
-    <option value="Poppins">
-    <option value="Press Start 2P">
-  </datalist>
+  <!-- filled from js/fonts.js -->
+  <datalist id="font-list"></datalist>
 
   <script type="module" src="js/theme.js"></script>
   <script type="module" src="js/config-ui.js"></script>
