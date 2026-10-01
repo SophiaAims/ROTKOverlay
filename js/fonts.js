@@ -21,7 +21,7 @@ export const FONTS = {
   'Handwritten': [
     'Permanent Marker', 'Pacifico', 'Lobster', 'Caveat', 'Satisfy', 'Kalam', 'Patrick Hand',
     'Indie Flower', 'Shadows Into Light', 'Amatic SC', 'Dancing Script', 'Sacramento',
-    'Gochi Hand', 'Rock Salt',
+    'Gochi Hand', 'Rock Salt', 'Oooh Baby',
   ],
   'Retro & pixel': [
     'Press Start 2P', 'VT323', 'Silkscreen', 'Pixelify Sans', 'Jersey 10', 'Tiny5', 'DotGothic16',
