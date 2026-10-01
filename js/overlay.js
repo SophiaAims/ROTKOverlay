@@ -35,10 +35,12 @@ function withAlpha(hex, percent) {
   return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${percent / 100})`;
 }
 
+
 let currentFont = '';
 function loadFont(name, weight) {
   if (currentFont === name + weight) return;
   currentFont = name + weight;
+
   let link = document.getElementById('font');
   if (!link) {
     link = document.createElement('link');
@@ -46,7 +48,14 @@ function loadFont(name, weight) {
     link.rel = 'stylesheet';
     document.head.append(link);
   }
-  link.href = `https://fonts.googleapis.com/css?family=${name.trim().replace(/ /g, '+')}:${weight}&display=swap`;
+
+  const family = name.trim().replace(/ /g, '+');
+  // some fonts only come in one weight, and google errors if you ask for one that doesn't exist
+  link.onerror = () => {
+    link.onerror = null;
+    link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`;
+  };
+  link.href = `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&display=swap`;
 }
 
 function celebrate(el) {
