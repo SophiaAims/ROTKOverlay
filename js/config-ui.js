@@ -26,8 +26,52 @@ function set(id, value) {
   changed();
 }
 
+// dropdown grouped by style, "Other" lets you type any Google Font
+function fontField(f) {
+  const id = 'f-' + f.id;
+  const known = Object.values(FONTS).flat();
+
+  const select = h(
+    'select',
+    { id },
+    ...Object.entries(FONTS).map(([group, names]) =>
+      h('optgroup', { label: group }, ...names.map((n) => h('option', { value: n }, n)))
+    ),
+    h('option', { value: 'other' }, 'Other Google Font…')
+  );
+  const other = h('input', { type: 'text', placeholder: 'Exact name from fonts.google.com', spellcheck: false });
+  other.setAttribute('aria-label', 'Google Font name');
+
+  function sync() {
+    const listed = known.includes(state[f.id]);
+    select.value = listed ? state[f.id] : 'other';
+    other.hidden = listed;
+    if (!listed) other.value = state[f.id];
+  }
+
+  select.addEventListener('change', () => {
+    if (select.value === 'other') {
+      other.hidden = false;
+      other.focus();
+      if (other.value.trim()) set(f.id, other.value.trim());
+    } else {
+      other.hidden = true;
+      set(f.id, select.value);
+    }
+  });
+  other.addEventListener('input', () => {
+    if (other.value.trim()) set(f.id, other.value.trim());
+  });
+
+  syncers[f.id] = sync;
+  sync();
+  return h('div', { className: 'field' }, h('label', { htmlFor: id }, f.label), h('div', { className: 'font-pick' }, select, other));
+}
+
 function makeField(f) {
   const id = 'f-' + f.id;
+
+  if (f.type === 'font') return fontField(f);
 
   if (f.type === 'checkbox') {
     const input = h('input', { type: 'checkbox', id, checked: state[f.id] });
@@ -67,9 +111,6 @@ function makeField(f) {
     input = h('input', { type: 'number', id, min: f.min, max: f.max, step: f.step ?? 1 });
   } else if (f.type === 'color') {
     input = h('input', { type: 'color', id });
-  } else if (f.type === 'font') {
-    input = h('input', { type: 'text', id, spellcheck: false });
-    input.setAttribute('list', 'font-list');
   } else {
     input = h('input', { type: 'text', id });
   }
@@ -201,11 +242,6 @@ document.querySelectorAll('[name="stage-bg"]').forEach((radio) => {
     document.getElementById('stage').dataset.bg = radio.value;
   });
 });
-
-// the style shows next to each name in the dropdown
-document.getElementById('font-list').append(
-  ...Object.entries(FONTS).flatMap(([style, names]) => names.map((n) => h('option', { value: n, label: style })))
-);
 
 buildForm();
 linkInput.value = rotkLinkFromState();
